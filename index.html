@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A ♡ A Little Love Letter</title>
+
+  <style>
+    :root {
+      --pink: #ff80ad;
+      --pink-dark: #d95788;
+      --pink-pale: #fff0f6;
+      --lavender: #f2e7ff;
+      --text: #80566c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(
+        135deg,
+        #fff0f5,
+        #fce4ec,
+        #f9e8ff,
+        #fff5f7
+      );
+      overflow-x: hidden;
+    }
+
+    /* MAIN CARD */
+
+    .card {
+      width: min(92%, 420px);
+      min-height: 510px;
+      padding: 26px 20px 18px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid #fff;
+      border-radius: 30px;
+      box-shadow: 0 15px 45px rgba(220, 135, 170, 0.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* COUPLE STICKER */
+
+    .sticker {
+      width: 180px;
+      height: 155px;
+      margin: 0 auto 12px;
+      background: #fff5f7;
+      border: 2px solid #ffe0e9;
+      border-radius: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 7px 20px rgba(220, 140, 170, 0.12);
+    }
+
+    .bear {
+      font-size: 76px;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 4px 3px #eacbd4);
+    }
+
+    .bear:first-of-type {
+      animation: bearOne 2s ease-in-out infinite;
+    }
+
+    .bear:nth-of-type(2) {
+      animation: bearTwo 2s ease-in-out infinite;
+    }
+
+    .sticker-heart {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 25px;
+      animation: heartbeat 1s infinite;
+    }
+
+    .sticker-heart.left {
+      top: 25px;
+      left: 15px;
+      right: auto;
+    }
+
+    /* TEXT */
+
+    h1 {
+      font-size: 25px;
+      line-height: 1.7;
+      margin: 16px 0 8px;
+      color: #a34f75;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #c18ba5;
+      line-height: 1.8;
+    }
+
+    /* BUTTON AREA */
+
+    .button-area {
+      width: 100%;
+      height: 155px;
+      margin-top: 18px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 28px;
+      padding: 13px 17px;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: inherit;
+      white-space: nowrap;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 5px 15px rgba(190, 110, 145, 0.18);
+    }
+
+    #yesButton {
+      position: absolute;
+      left: 5px;
+      top: 18px;
+      z-index: 2;
+      background: #ff709e;
+      color: white;
+    }
+
+    #yesButton:active {
+      transform: scale(0.96);
+    }
+
+    #noButton {
+      position: absolute;
+      left: 58%;
+      top: 18px;
+      z-index: 3;
+      background: #f5e9ef;
+      color: #986b83;
+    }
+
+    /* SUCCESS SCREEN */
+
+    .hidden {
+      display: none !important;
+    }
+
+    #successScreen {
+      padding-top: 8px;
+    }
+
+    .success-title {
+      font-size: 27px;
+      color: #e85f92;
+      line-height: 1.7;
+    }
+
+    .success-message {
+      color: #b77796;
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .success-sticker {
+      margin: 12px auto;
+      animation: popIn 0.7s ease-out;
+    }
+
+    .love-line {
+      font-size: 25px;
+      line-height: 1.9;
+    }
+
+    /* SMALL PINK H2 LOGO */
+
+    .logo {
+      margin: 18px auto 0;
+      padding-top: 10px;
+      border-top: 1px solid #f9dce7;
+    }
+
+    .logo h2 {
+      margin: 0;
+      color: #e99ab8;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 23px;
+      font-weight: bold;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    /* FLOATING HEARTS */
+
+    .floating-heart {
+      position: fixed;
+      bottom: -45px;
+      pointer-events: none;
+      z-index: 10;
+      animation: floatUp 4s linear forwards;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes bearOne {
+      0%, 100% { transform: rotate(-9deg) translateY(0); }
+      50% { transform: rotate(0deg) translateY(-7px); }
+    }
+
+    @keyframes bearTwo {
+      0%, 100% { transform: rotate(8deg) translateY(0); }
+      50% { transform: rotate(-2deg) translateY(-8px); }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) rotate(35deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      70% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 380px) {
+      .card {
+        padding: 22px 14px 16px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      button {
+        padding: 12px 13px;
+        font-size: 14px;
+      }
+
+      .sticker {
+        width: 165px;
+        height: 145px;
+      }
+
+      .bear {
+        font-size: 68px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bear,
+      .sticker-heart {
+        animation-duration: 4s;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="card">
+
+    <!-- FIRST SCREEN -->
+
+    <section id="questionScreen">
+
+      <div class="sticker">
+        <span class="sticker-heart left">💕</span>
+        <span class="bear">🐻</span>
+        <span class="bear">🐻‍❄️</span>
+        <span class="sticker-heart">💗</span>
+      </div>
+
+      <h1>ညီမနဲ့မတွဲချင်ဘူးလား 🥺</h1>
+
+      <p class="subtitle">
+        စဉ်းစားပြီး ဖြေပေးနော်... 💗
+      </p>
+
+      <div class="button-area" id="buttonArea">
+        <button id="yesButton">တွဲမယ်လေ😚</button>
+        <button id="noButton">မတွဲချင်ဘူး 🙂‍↔️</button>
+      </div>
+
+      <p class="subtitle">
+        မှန်မှန်ဖြေပေးပါနော် 🙈💕
+      </p>
+
+      <div class="logo">
+        <h2>A</h2>
+      </div>
+
+    </section>
+
+
+    <!-- SECOND SCREEN -->
+
+    <section id="successScreen" class="hidden">
+
+      <div class="sticker success-sticker">
+        <span class="sticker-heart left">💗</span>
+        <span class="bear">🐻</span>
+        <span class="bear">🐻‍❄️</span>
+        <span class="sticker-heart">💖</span>
+      </div>
+
+      <h1 class="success-title">
+        ယေး…. အာဘွား ❤️🫶🏻😚
+      </h1>
+
+      <p class="success-message">
+        ယေးးးးးအရမ်းပျော်သွားပြီ 🥹💕<br>
+        အများကြီး ချစ်ပေးမယ်နော် 💗
+      </p>
+
+      <div class="love-line">
+        💕 💗 💖 💘<br>
+        🫶🏻 ❤️ 🫶🏻
+      </div>
+
+      <div class="logo">
+        <h2>A</h2>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+    // Get HTML elements.
+
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const buttonArea = document.getElementById("buttonArea");
+
+    const questionScreen =
+      document.getElementById("questionScreen");
+
+    const successScreen =
+      document.getElementById("successScreen");
+
+
+    // Check if two rectangles overlap.
+
+    function overlaps(a, b) {
+      return !(
+        a.right <= b.left ||
+        a.left >= b.right ||
+        a.bottom <= b.top ||
+        a.top >= b.bottom
+      );
+    }
+
+
+    // Move No without covering Yes.
+
+    function moveNoButton() {
+      const areaWidth = buttonArea.clientWidth;
+      const areaHeight = buttonArea.clientHeight;
+
+      const noWidth = noButton.offsetWidth;
+      const noHeight = noButton.offsetHeight;
+
+      const padding = 5;
+      const gap = 10;
+
+      const yesRect = {
+        left: yesButton.offsetLeft - gap,
+        top: yesButton.offsetTop - gap,
+        right: yesButton.offsetLeft + yesButton.offsetWidth + gap,
+        bottom: yesButton.offsetTop + yesButton.offsetHeight + gap
+      };
+
+      const maxX = areaWidth - noWidth - padding;
+      const maxY = areaHeight - noHeight - padding;
+
+      if (maxX < padding || maxY < padding) {
+        return;
+      }
+
+      for (let i = 0; i < 200; i++) {
+        const x = padding + Math.random() * (maxX - padding);
+        const y = padding + Math.random() * (maxY - padding);
+
+        const candidate = {
+          left: x,
+          top: y,
+          right: x + noWidth,
+          bottom: y + noHeight
+        };
+
+        if (!overlaps(candidate, yesRect)) {
+          noButton.style.left = x + "px";
+          noButton.style.top = y + "px";
+          return;
+        }
+      }
+    }
+
+
+    // Make No move when touched or clicked.
+
+    noButton.addEventListener("pointerdown", function(event) {
+      event.preventDefault();
+      moveNoButton();
+    });
+
+    noButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      moveNoButton();
+    });
+
+
+    // Create floating hearts.
+
+    function createHeart() {
+      const heart = document.createElement("div");
+
+      const heartTypes = [
+        "💗", "💕", "💖", "💘", "💝", "❤️", "🫶🏻"
+      ];
+
+      heart.className = "floating-heart";
+      heart.textContent =
+        heartTypes[Math.floor(Math.random() * heartTypes.length)];
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (18 + Math.random() * 25) + "px";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(function() {
+        heart.remove();
+      }, 6500);
+    }
+
+
+    // Yes opens the success screen.
+
+    yesButton.addEventListener("click", function() {
+      questionScreen.classList.add("hidden");
+      successScreen.classList.remove("hidden");
+
+      for (let i = 0; i < 35; i++) {
+        setTimeout(createHeart, i * 100);
+      }
+    });
+
+
+    // Set the initial No button position.
+
+    window.addEventListener("load", moveNoButton);
+    window.addEventListener("resize", moveNoButton);
+  </script>
+
+</body>
+</html>
